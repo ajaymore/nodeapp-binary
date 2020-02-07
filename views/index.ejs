@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link rel="stylesheet" href="bootstrap.min.css" />
+    <style>
+      body {
+        padding: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <h3>Message will appear below...</h3>
+    <ul id="messages"></ul>
+    <script src="jquery-3.4.1.slim.min.js"></script>
+    <script src="popper.min.js"></script>
+    <script src="bootstrap.min.js"></script>
+    <script src="socket.io.js"></script>
+    <script>
+      fetch('/messages')
+        .then(res => res.json())
+        .then(data => {
+          data.forEach(element => {
+            $('#messages').append($('<li>').text(element.message));
+          });
+        });
+      var socket = io();
+      socket.on('message', function(data) {
+        $('#messages').append($('<li>').text(data.message));
+      });
+    </script>
+  </body>
+</html>
